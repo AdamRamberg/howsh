@@ -18,9 +18,21 @@ const config = new Conf<ConfigSchema>({
 });
 
 const DEFAULT_MODELS: Record<Provider, string> = {
-  anthropic: 'claude-3-haiku-20240307',
+  anthropic: 'claude-opus-4-5-20251101',
   openai: 'gpt-4o-mini'
 };
+
+const MODEL_ALIASES: Record<string, { provider: Provider; model: string }> = {
+  'haiku': { provider: 'anthropic', model: 'claude-haiku-4-5-20251001' },
+  'sonnet': { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' },
+  'opus': { provider: 'anthropic', model: 'claude-opus-4-5-20251101' },
+  '4o': { provider: 'openai', model: 'gpt-4o' },
+  '4o-mini': { provider: 'openai', model: 'gpt-4o-mini' },
+};
+
+export function resolveModel(alias: string): { provider: Provider; model: string } | null {
+  return MODEL_ALIASES[alias] || null;
+}
 
 const ENV_KEYS: Record<Provider, string> = {
   anthropic: 'ANTHROPIC_API_KEY',
@@ -44,7 +56,13 @@ export function setConfig(key: string, value: string): void {
   } else if (key === 'api-key') {
     config.set('apiKey', value);
   } else if (key === 'model') {
-    config.set('model', value);
+    const resolved = resolveModel(value);
+    if (resolved) {
+      config.set('model', resolved.model);
+      config.set('provider', resolved.provider);
+    } else {
+      config.set('model', value);
+    }
   } else {
     throw new Error(`Unknown config key: ${key}`);
   }

@@ -18,7 +18,8 @@ program
 program
   .argument('[description...]', 'English description to translate to bash')
   .option('--suggest', 'Quick mode for shell integration (no streaming)')
-  .action(async (description: string[], options: { suggest?: boolean }) => {
+  .option('--model <model>', 'Override the model to use for this request')
+  .action(async (description: string[], options: { suggest?: boolean; model?: string }) => {
     if (description.length > 0) {
       await translateCommand(description.join(' '), options);
     } else {

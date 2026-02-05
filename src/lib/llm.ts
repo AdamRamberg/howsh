@@ -1,19 +1,23 @@
 import { generateText, streamText } from 'ai';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { createOpenAI } from '@ai-sdk/openai';
-import { getConfig, getApiKeySetupMessage } from './config.js';
+import { getConfig, getApiKeySetupMessage, resolveModel } from './config.js';
 import { TRANSLATION_PROMPT } from './prompt.js';
 
-export async function translate(englishInput: string): Promise<string> {
-  const { provider, model, apiKey } = getConfig();
+export async function translate(englishInput: string, modelOverride?: string): Promise<string> {
+  const config = getConfig();
+  const resolved = modelOverride ? resolveModel(modelOverride) : null;
+  const selectedProvider = resolved?.provider || config.provider;
+  const selectedModel = resolved?.model || modelOverride || config.model;
+  const apiKey = config.apiKey;
 
   if (!apiKey) {
     throw new Error(getApiKeySetupMessage());
   }
 
-  const modelInstance = provider === 'openai'
-    ? createOpenAI({ apiKey })(model)
-    : createAnthropic({ apiKey })(model);
+  const modelInstance = selectedProvider === 'openai'
+    ? createOpenAI({ apiKey })(selectedModel)
+    : createAnthropic({ apiKey })(selectedModel);
 
   const result = await generateText({
     model: modelInstance,
@@ -24,16 +28,20 @@ export async function translate(englishInput: string): Promise<string> {
   return result.text.trim();
 }
 
-export async function* translateStream(englishInput: string): AsyncGenerator<string> {
-  const { provider, model, apiKey } = getConfig();
+export async function* translateStream(englishInput: string, modelOverride?: string): AsyncGenerator<string> {
+  const config = getConfig();
+  const resolved = modelOverride ? resolveModel(modelOverride) : null;
+  const selectedProvider = resolved?.provider || config.provider;
+  const selectedModel = resolved?.model || modelOverride || config.model;
+  const apiKey = config.apiKey;
 
   if (!apiKey) {
     throw new Error(getApiKeySetupMessage());
   }
 
-  const modelInstance = provider === 'openai'
-    ? createOpenAI({ apiKey })(model)
-    : createAnthropic({ apiKey })(model);
+  const modelInstance = selectedProvider === 'openai'
+    ? createOpenAI({ apiKey })(selectedModel)
+    : createAnthropic({ apiKey })(selectedModel);
 
   const result = streamText({
     model: modelInstance,

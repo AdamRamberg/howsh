@@ -12,6 +12,8 @@ HOWSH_SUGGESTION_FILE="${TMPDIR:-/tmp}/howsh-suggestion-$$"
 typeset -g _HOWSH_SUGGESTION=""
 typeset -g _HOWSH_LAST_BUFFER=""
 typeset -g _HOWSH_WAITING=0
+typeset -g _HOWSH_SEQ=0
+typeset -g _HOWSH_BG_PID=0
 
 # Check if howsh is enabled
 _howsh_enabled() {
@@ -46,10 +48,19 @@ _howsh_display() {
 # Check for suggestion file (does NOT display)
 _howsh_check_suggestion() {
     if [[ -f "$HOWSH_SUGGESTION_FILE" ]]; then
-        local suggestion
-        IFS= read -r suggestion < "$HOWSH_SUGGESTION_FILE" 2>/dev/null
+        local line seq suggestion
+        IFS= read -r line < "$HOWSH_SUGGESTION_FILE" 2>/dev/null
         rm -f "$HOWSH_SUGGESTION_FILE" 2>/dev/null
         _HOWSH_WAITING=0
+
+        # Parse sequence number and suggestion
+        seq="${line%%:*}"
+        suggestion="${line#*:}"
+
+        # Discard stale results
+        if [[ "$seq" != "$_HOWSH_SEQ" ]]; then
+            return 1
+        fi
 
         if [[ -n "$suggestion" ]]; then
             _HOWSH_SUGGESTION=$suggestion
@@ -82,8 +93,18 @@ _howsh_suggest_async() {
     _HOWSH_LAST_BUFFER="$buffer"
     _HOWSH_WAITING=1
 
+    # Kill previous background job if still running
+    if (( _HOWSH_BG_PID > 0 )); then
+        kill "$_HOWSH_BG_PID" 2>/dev/null
+        _HOWSH_BG_PID=0
+    fi
+
     # Clean up old suggestion file
     rm -f "$HOWSH_SUGGESTION_FILE" 2>/dev/null
+
+    # Increment sequence number
+    (( _HOWSH_SEQ++ ))
+    local seq=$_HOWSH_SEQ
 
     # Fetch suggestion in background
     {
@@ -91,9 +112,10 @@ _howsh_suggest_async() {
         result=$(howsh --suggest "$buffer" 2>/dev/null)
 
         if [[ -n "$result" ]] && [[ "$result" != "$buffer" ]]; then
-            print -r -- "$result" > "$HOWSH_SUGGESTION_FILE"
+            print -r -- "${seq}:${result}" > "$HOWSH_SUGGESTION_FILE"
         fi
     } &!
+    _HOWSH_BG_PID=$!
 }
 
 # Wrapped self-insert widget
@@ -208,6 +230,9 @@ TRAPALRM() {
 
 # Cleanup
 _howsh_cleanup() {
+    if (( _HOWSH_BG_PID > 0 )); then
+        kill "$_HOWSH_BG_PID" 2>/dev/null
+    fi
     rm -f "$HOWSH_SUGGESTION_FILE" 2>/dev/null
 }
 trap '_howsh_cleanup' EXIT
