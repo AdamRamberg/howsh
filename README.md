@@ -1,21 +1,21 @@
-# bash-gpt
+# cmdai
 
 Turn English into bash commands with AI-powered suggestions.
 
-bash-gpt provides **always-on suggestions** that appear as you type, similar to zsh-autosuggestions or Cursor's tab completion. Just describe what you want in plain English, and accept the suggestion with Tab.
+cmdai provides **always-on suggestions** that appear as you type, similar to zsh-autosuggestions or Cursor's tab completion. Just describe what you want in plain English, and accept the suggestion with Tab.
 
 ## Installation
 
 ### Global Install (Recommended)
 
 ```bash
-npm install -g bash-gpt
+npm install -g cmdai
 ```
 
 ### One-time Use
 
 ```bash
-npx bash-gpt "list all files larger than 100MB"
+npx cmdai "list all files larger than 100MB"
 ```
 
 ### Requirements
@@ -27,22 +27,22 @@ npx bash-gpt "list all files larger than 100MB"
 1. Set your API key:
 
 ```bash
-bash-gpt config set api-key YOUR_ANTHROPIC_KEY
+cmdai config set api-key YOUR_ANTHROPIC_KEY
 ```
 
 2. Try it out:
 
 ```bash
-bash-gpt "find all python files modified today"
+cmdai "find all python files modified today"
 # Output: find . -name "*.py" -mtime 0
 ```
 
 3. Enable always-on suggestions:
 
 ```bash
-bash-gpt setup   # Add to your shell
+cmdai setup   # Add to your shell
 source ~/.zshrc  # Reload shell config
-bash-gpt on      # Enable suggestions
+cmdai on      # Enable suggestions
 ```
 
 Now just type in plain English and press Tab to accept suggestions!
@@ -52,19 +52,19 @@ Now just type in plain English and press Tab to accept suggestions!
 ### Direct Translation
 
 ```bash
-bash-gpt "find all files larger than 100MB"
+cmdai "find all files larger than 100MB"
 # Output: find . -size +100M
 
-bash-gpt "show disk usage sorted by size"
+cmdai "show disk usage sorted by size"
 # Output: du -sh * | sort -h
 
-bash-gpt "find processes using port 3000"
+cmdai "find processes using port 3000"
 # Output: lsof -i :3000
 ```
 
 ### Always-On Suggestions
 
-When enabled, bash-gpt shows grayed-out suggestions as you type:
+When enabled, cmdai shows grayed-out suggestions as you type:
 
 1. Start typing an English description
 2. A suggestion appears in gray after your cursor
@@ -73,10 +73,10 @@ When enabled, bash-gpt shows grayed-out suggestions as you type:
 
 ```bash
 # Enable suggestions
-bash-gpt on
+cmdai on
 
 # Disable suggestions
-bash-gpt off
+cmdai off
 ```
 
 ### Cheat Sheets
@@ -85,14 +85,14 @@ Browse built-in bash cheatsheets:
 
 ```bash
 # List all cheatsheets
-bash-gpt list
+cmdai list
 
 # View a specific cheatsheet
-bash-gpt list tar
-bash-gpt list git
+cmdai list tar
+cmdai list git
 
 # Search across all cheatsheets
-bash-gpt list --search "network"
+cmdai list --search "network"
 ```
 
 Available cheatsheets:
@@ -106,21 +106,21 @@ Available cheatsheets:
 
 ```bash
 # View current config
-bash-gpt config
+cmdai config
 
 # Set provider (anthropic or openai)
-bash-gpt config set provider anthropic
+cmdai config set provider anthropic
 
 # Set API key
-bash-gpt config set api-key sk-ant-...
+cmdai config set api-key sk-ant-...
 
 # Set model (optional, uses fast default)
-bash-gpt config set model claude-3-haiku-20240307
+cmdai config set model claude-3-haiku-20240307
 ```
 
 ## Providers
 
-bash-gpt supports multiple LLM providers:
+cmdai supports multiple LLM providers:
 
 | Provider | Default Model | Env Variable |
 |----------|--------------|--------------|
@@ -131,7 +131,7 @@ You can set the API key either through the config command or environment variabl
 
 ```bash
 # Via config (stored securely)
-bash-gpt config set api-key YOUR_KEY
+cmdai config set api-key YOUR_KEY
 
 # Via environment variable
 export ANTHROPIC_API_KEY=your_key
@@ -139,17 +139,17 @@ export ANTHROPIC_API_KEY=your_key
 
 ## Shell Integration
 
-bash-gpt integrates with Zsh to provide always-on suggestions:
+cmdai integrates with Zsh to provide always-on suggestions:
 
 ```bash
 # One-time setup (adds to ~/.zshrc)
-bash-gpt setup
+cmdai setup
 
 # Reload your shell
 source ~/.zshrc
 
 # Enable suggestions
-bash-gpt on
+cmdai on
 ```
 
 The shell integration:
@@ -162,24 +162,24 @@ The shell integration:
 
 ```bash
 # File operations
-bash-gpt "delete all node_modules folders"
+cmdai "delete all node_modules folders"
 # find . -name "node_modules" -type d -exec rm -rf {} +
 
-bash-gpt "find duplicate files"
+cmdai "find duplicate files"
 # find . -type f -exec md5sum {} + | sort | uniq -d -w32
 
 # Text processing
-bash-gpt "count lines of code in all javascript files"
+cmdai "count lines of code in all javascript files"
 # find . -name "*.js" -exec wc -l {} + | tail -1
 
-bash-gpt "replace foo with bar in all python files"
+cmdai "replace foo with bar in all python files"
 # find . -name "*.py" -exec sed -i 's/foo/bar/g' {} +
 
 # System administration
-bash-gpt "show largest files in current directory"
+cmdai "show largest files in current directory"
 # du -sh * | sort -rh | head -10
 
-bash-gpt "kill all node processes"
+cmdai "kill all node processes"
 # pkill -f node
 ```
 
@@ -187,8 +187,8 @@ bash-gpt "kill all node processes"
 
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/bash-gpt
-cd bash-gpt
+git clone https://github.com/AdamRamberg/cmdai
+cd cmdai
 
 # Install dependencies
 bun install

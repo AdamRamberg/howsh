@@ -9,7 +9,7 @@ interface ConfigSchema {
 }
 
 const config = new Conf<ConfigSchema>({
-  projectName: 'bash-gpt',
+  projectName: 'cmdai',
   schema: {
     provider: { type: 'string', default: 'anthropic' },
     apiKey: { type: 'string' },
@@ -67,13 +67,13 @@ No API key configured.
 Choose a provider and set your API key:
 
   Anthropic (recommended for bash translation):
-    bash-gpt config set provider anthropic
-    bash-gpt config set api-key YOUR_ANTHROPIC_KEY
+    cmdai config set provider anthropic
+    cmdai config set api-key YOUR_ANTHROPIC_KEY
     Get a key: https://console.anthropic.com/
 
   OpenAI:
-    bash-gpt config set provider openai
-    bash-gpt config set api-key YOUR_OPENAI_KEY
+    cmdai config set provider openai
+    cmdai config set api-key YOUR_OPENAI_KEY
     Get a key: https://platform.openai.com/api-keys
 
 Or use environment variables:

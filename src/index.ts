@@ -10,7 +10,7 @@ import { configCommand } from './commands/config.js';
 const program = new Command();
 
 program
-  .name('bash-gpt')
+  .name('cmdai')
   .description('Turn English into bash commands with AI-powered suggestions')
   .version('0.1.0');
 
@@ -47,7 +47,7 @@ program
 // Setup command
 program
   .command('setup')
-  .description('Add bash-gpt to your shell configuration')
+  .description('Add cmdai to your shell configuration')
   .action(setupCommand);
 
 // Config command
