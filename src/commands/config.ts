@@ -12,7 +12,7 @@ export async function configCommand(args: string[]): Promise<void> {
 
   if (action === 'set') {
     if (!key || !value) {
-      console.error(chalk.red('Usage: cmdai config set <key> <value>'));
+      console.error(chalk.red('Usage: howsh config set <key> <value>'));
       console.log('\nAvailable keys:');
       console.log('  provider  - LLM provider (anthropic or openai)');
       console.log('  api-key   - API key for the selected provider');
@@ -33,14 +33,14 @@ export async function configCommand(args: string[]): Promise<void> {
   }
 
   console.error(chalk.red(`Unknown config action: ${action}`));
-  console.log('Usage: cmdai config [set <key> <value>]');
+  console.log('Usage: howsh config [set <key> <value>]');
   process.exit(1);
 }
 
 function showConfig(): void {
   const { provider, model, apiKey } = getConfig();
 
-  console.log(chalk.bold('cmdai configuration:\n'));
+  console.log(chalk.bold('howsh configuration:\n'));
   console.log(`  ${chalk.cyan('provider')}: ${provider}`);
   console.log(`  ${chalk.cyan('model')}: ${model}`);
   console.log(`  ${chalk.cyan('api-key')}: ${maskApiKey(apiKey)}`);

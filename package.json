@@ -1,11 +1,11 @@
 {
-  "name": "cmdai",
+  "name": "howsh",
   "version": "0.1.0",
   "description": "Turn English into bash commands with AI-powered suggestions",
   "type": "module",
   "main": "./dist/index.js",
   "bin": {
-    "cmdai": "./dist/index.js"
+    "howsh": "./dist/index.js"
   },
   "files": [
     "dist",
@@ -28,7 +28,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AdamRamberg/cmdai"
+    "url": "https://github.com/AdamRamberg/howsh"
   },
   "dependencies": {
     "ai": "^4.0.0",

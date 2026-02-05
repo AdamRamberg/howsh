@@ -1,21 +1,21 @@
-# cmdai
+# howsh
 
 Turn English into bash commands with AI-powered suggestions.
 
-cmdai provides **always-on suggestions** that appear as you type, similar to zsh-autosuggestions or Cursor's tab completion. Just describe what you want in plain English, and accept the suggestion with Tab.
+howsh provides **always-on suggestions** that appear as you type, similar to zsh-autosuggestions or Cursor's tab completion. Just describe what you want in plain English, and accept the suggestion with Tab.
 
 ## Installation
 
 ### Global Install (Recommended)
 
 ```bash
-npm install -g cmdai
+npm install -g howsh
 ```
 
 ### One-time Use
 
 ```bash
-npx cmdai "list all files larger than 100MB"
+npx howsh "list all files larger than 100MB"
 ```
 
 ### Requirements
@@ -27,22 +27,22 @@ npx cmdai "list all files larger than 100MB"
 1. Set your API key:
 
 ```bash
-cmdai config set api-key YOUR_ANTHROPIC_KEY
+howsh config set api-key YOUR_ANTHROPIC_KEY
 ```
 
 2. Try it out:
 
 ```bash
-cmdai "find all python files modified today"
+howsh "find all python files modified today"
 # Output: find . -name "*.py" -mtime 0
 ```
 
 3. Enable always-on suggestions:
 
 ```bash
-cmdai setup   # Add to your shell
+howsh setup   # Add to your shell
 source ~/.zshrc  # Reload shell config
-cmdai on      # Enable suggestions
+howsh on      # Enable suggestions
 ```
 
 Now just type in plain English and press Tab to accept suggestions!
@@ -52,19 +52,19 @@ Now just type in plain English and press Tab to accept suggestions!
 ### Direct Translation
 
 ```bash
-cmdai "find all files larger than 100MB"
+howsh "find all files larger than 100MB"
 # Output: find . -size +100M
 
-cmdai "show disk usage sorted by size"
+howsh "show disk usage sorted by size"
 # Output: du -sh * | sort -h
 
-cmdai "find processes using port 3000"
+howsh "find processes using port 3000"
 # Output: lsof -i :3000
 ```
 
 ### Always-On Suggestions
 
-When enabled, cmdai shows grayed-out suggestions as you type:
+When enabled, howsh shows grayed-out suggestions as you type:
 
 1. Start typing an English description
 2. A suggestion appears in gray after your cursor
@@ -73,10 +73,10 @@ When enabled, cmdai shows grayed-out suggestions as you type:
 
 ```bash
 # Enable suggestions
-cmdai on
+howsh on
 
 # Disable suggestions
-cmdai off
+howsh off
 ```
 
 ### Cheat Sheets
@@ -85,14 +85,14 @@ Browse built-in bash cheatsheets:
 
 ```bash
 # List all cheatsheets
-cmdai list
+howsh list
 
 # View a specific cheatsheet
-cmdai list tar
-cmdai list git
+howsh list tar
+howsh list git
 
 # Search across all cheatsheets
-cmdai list --search "network"
+howsh list --search "network"
 ```
 
 Available cheatsheets:
@@ -106,21 +106,21 @@ Available cheatsheets:
 
 ```bash
 # View current config
-cmdai config
+howsh config
 
 # Set provider (anthropic or openai)
-cmdai config set provider anthropic
+howsh config set provider anthropic
 
 # Set API key
-cmdai config set api-key sk-ant-...
+howsh config set api-key sk-ant-...
 
 # Set model (optional, uses fast default)
-cmdai config set model claude-3-haiku-20240307
+howsh config set model claude-3-haiku-20240307
 ```
 
 ## Providers
 
-cmdai supports multiple LLM providers:
+howsh supports multiple LLM providers:
 
 | Provider | Default Model | Env Variable |
 |----------|--------------|--------------|
@@ -131,7 +131,7 @@ You can set the API key either through the config command or environment variabl
 
 ```bash
 # Via config (stored securely)
-cmdai config set api-key YOUR_KEY
+howsh config set api-key YOUR_KEY
 
 # Via environment variable
 export ANTHROPIC_API_KEY=your_key
@@ -139,17 +139,17 @@ export ANTHROPIC_API_KEY=your_key
 
 ## Shell Integration
 
-cmdai integrates with Zsh to provide always-on suggestions:
+howsh integrates with Zsh to provide always-on suggestions:
 
 ```bash
 # One-time setup (adds to ~/.zshrc)
-cmdai setup
+howsh setup
 
 # Reload your shell
 source ~/.zshrc
 
 # Enable suggestions
-cmdai on
+howsh on
 ```
 
 The shell integration:
@@ -162,24 +162,24 @@ The shell integration:
 
 ```bash
 # File operations
-cmdai "delete all node_modules folders"
+howsh "delete all node_modules folders"
 # find . -name "node_modules" -type d -exec rm -rf {} +
 
-cmdai "find duplicate files"
+howsh "find duplicate files"
 # find . -type f -exec md5sum {} + | sort | uniq -d -w32
 
 # Text processing
-cmdai "count lines of code in all javascript files"
+howsh "count lines of code in all javascript files"
 # find . -name "*.js" -exec wc -l {} + | tail -1
 
-cmdai "replace foo with bar in all python files"
+howsh "replace foo with bar in all python files"
 # find . -name "*.py" -exec sed -i 's/foo/bar/g' {} +
 
 # System administration
-cmdai "show largest files in current directory"
+howsh "show largest files in current directory"
 # du -sh * | sort -rh | head -10
 
-cmdai "kill all node processes"
+howsh "kill all node processes"
 # pkill -f node
 ```
 
@@ -187,8 +187,8 @@ cmdai "kill all node processes"
 
 ```bash
 # Clone the repo
-git clone https://github.com/AdamRamberg/cmdai
-cd cmdai
+git clone https://github.com/AdamRamberg/howsh
+cd howsh
 
 # Install dependencies
 bun install

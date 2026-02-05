@@ -9,7 +9,7 @@ interface ConfigSchema {
 }
 
 const config = new Conf<ConfigSchema>({
-  projectName: 'cmdai',
+  projectName: 'howsh',
   schema: {
     provider: { type: 'string', default: 'anthropic' },
     apiKey: { type: 'string' },
@@ -67,13 +67,13 @@ No API key configured.
 Choose a provider and set your API key:
 
   Anthropic (recommended for bash translation):
-    cmdai config set provider anthropic
-    cmdai config set api-key YOUR_ANTHROPIC_KEY
+    howsh config set provider anthropic
+    howsh config set api-key YOUR_ANTHROPIC_KEY
     Get a key: https://console.anthropic.com/
 
   OpenAI:
-    cmdai config set provider openai
-    cmdai config set api-key YOUR_OPENAI_KEY
+    howsh config set provider openai
+    howsh config set api-key YOUR_OPENAI_KEY
     Get a key: https://platform.openai.com/api-keys
 
 Or use environment variables:

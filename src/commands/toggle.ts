@@ -3,7 +3,7 @@ import { writeFileSync, readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import { tmpdir, homedir } from 'os';
 
-const STATE_FILE = join(tmpdir(), 'cmdai-state');
+const STATE_FILE = join(tmpdir(), 'howsh-state');
 
 export function getToggleState(): boolean {
   try {
@@ -22,7 +22,7 @@ export function setToggleState(on: boolean): void {
 
 export async function toggleOnCommand(): Promise<void> {
   setToggleState(true);
-  console.log(chalk.green('cmdai suggestions enabled.'));
+  console.log(chalk.green('howsh suggestions enabled.'));
   console.log(chalk.dim('Start typing English to see suggestions.'));
   console.log(chalk.dim('Press Tab or Right Arrow to accept.'));
 
@@ -30,13 +30,13 @@ export async function toggleOnCommand(): Promise<void> {
   const zshrc = join(homedir(), '.zshrc');
   if (existsSync(zshrc)) {
     const content = readFileSync(zshrc, 'utf-8');
-    if (!content.includes('cmdai.zsh')) {
-      console.log(chalk.yellow('\nNote: Run "cmdai setup" to enable shell integration.'));
+    if (!content.includes('howsh.zsh')) {
+      console.log(chalk.yellow('\nNote: Run "howsh setup" to enable shell integration.'));
     }
   }
 }
 
 export async function toggleOffCommand(): Promise<void> {
   setToggleState(false);
-  console.log(chalk.yellow('cmdai suggestions disabled.'));
+  console.log(chalk.yellow('howsh suggestions disabled.'));
 }

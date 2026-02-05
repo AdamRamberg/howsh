@@ -17,9 +17,9 @@ export async function setupCommand(): Promise<void> {
   const content = readFileSync(zshrc, 'utf-8');
 
   // Check if already set up
-  if (content.includes('cmdai.zsh')) {
-    console.log(chalk.green('cmdai is already set up in your .zshrc'));
-    console.log(chalk.dim('\nRun "cmdai on" to enable suggestions.'));
+  if (content.includes('howsh.zsh')) {
+    console.log(chalk.green('howsh is already set up in your .zshrc'));
+    console.log(chalk.dim('\nRun "howsh on" to enable suggestions.'));
     return;
   }
 
@@ -27,19 +27,19 @@ export async function setupCommand(): Promise<void> {
   // When installed via npm, it will be in the package's src/shell directory
   // We'll use a relative path from the installed location
   const setupLines = `
-# cmdai shell integration
+# howsh shell integration
 # Source the zsh plugin for always-on suggestions
-if command -v cmdai &> /dev/null; then
-  CMDAI_BIN="$(command -v cmdai)"
-  CMDAI_REAL="$(readlink -f "$CMDAI_BIN" 2>/dev/null || realpath "$CMDAI_BIN" 2>/dev/null || echo "$CMDAI_BIN")"
-  CMDAI_DIR="$(dirname "$(dirname "$CMDAI_REAL")")"
+if command -v howsh &> /dev/null; then
+  HOWSH_BIN="$(command -v howsh)"
+  HOWSH_REAL="$(readlink -f "$HOWSH_BIN" 2>/dev/null || realpath "$HOWSH_BIN" 2>/dev/null || echo "$HOWSH_BIN")"
+  HOWSH_DIR="$(dirname "$(dirname "$HOWSH_REAL")")"
 
   # Try various installation layouts
   for zsh_path in \\
-    "$CMDAI_DIR/src/shell/cmdai.zsh" \\
-    "$CMDAI_DIR/lib/node_modules/cmdai/src/shell/cmdai.zsh" \\
-    "$(npm root -g 2>/dev/null)/cmdai/src/shell/cmdai.zsh" \\
-    "$(bun pm -g 2>/dev/null)/cmdai/src/shell/cmdai.zsh"
+    "$HOWSH_DIR/src/shell/howsh.zsh" \\
+    "$HOWSH_DIR/lib/node_modules/howsh/src/shell/howsh.zsh" \\
+    "$(npm root -g 2>/dev/null)/howsh/src/shell/howsh.zsh" \\
+    "$(bun pm -g 2>/dev/null)/howsh/src/shell/howsh.zsh"
   do
     if [[ -f "$zsh_path" ]]; then
       source "$zsh_path"
@@ -51,9 +51,9 @@ fi
 
   writeFileSync(zshrc, content + setupLines);
 
-  console.log(chalk.green('Added cmdai to your .zshrc'));
+  console.log(chalk.green('Added howsh to your .zshrc'));
   console.log(chalk.dim('\nTo activate:'));
   console.log(chalk.cyan('  1. Restart your terminal, or run: source ~/.zshrc'));
-  console.log(chalk.cyan('  2. Enable suggestions: cmdai on'));
+  console.log(chalk.cyan('  2. Enable suggestions: howsh on'));
   console.log(chalk.dim('\nType English and press Tab to accept suggestions.'));
 }
