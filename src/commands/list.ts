@@ -137,8 +137,8 @@ export async function listCommand(query?: string, options?: { search?: boolean }
   cheatsheets.forEach(c => {
     console.log(`  ${chalk.cyan(c.name)}`);
   });
-  console.log(chalk.dim('\nUsage: bash-gpt list <name>'));
-  console.log(chalk.dim('       bash-gpt list --search <query>'));
+  console.log(chalk.dim('\nUsage: cmdai list <name>'));
+  console.log(chalk.dim('       cmdai list --search <query>'));
 }
 
 function searchCheatsheets(cheatsheets: CheatsheetEntry[], query: string): void {
